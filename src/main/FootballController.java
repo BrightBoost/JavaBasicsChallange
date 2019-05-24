@@ -31,10 +31,8 @@ public class FootballController {
         while (teams.size() != 0) {
 
             // Pick two random teams
-            Team team1 = teams.get((int)(Math.random() * teams.size()));
-            teams.remove(team1);
-            Team team2 = teams.get((int)(Math.random() * teams.size()));
-            teams.remove(team2);
+            Team team1 = pickRandomTeamFromList();
+            Team team2 = pickRandomTeamFromList();
 
             // Create score for both teams
             int goalsTeam1 = (int)(Math.random() * 10) + 1;
@@ -45,18 +43,29 @@ public class FootballController {
             winningTeams.add(winner);
 
             // Print score
-            System.out.print(winner.getTeamName() + " won the match: " + goalsTeam1 + "-" + goalsTeam2);
-            if (goalsTeam1 == goalsTeam2) {
-                System.out.println(" (won by penalties)");
-            }
-            else {
-                System.out.println("");
-            }
+            printEndScore(winner, goalsTeam1, goalsTeam2);
         }
         System.out.println("");
 
         // Fill current team list with teams dat have won their match
         teams = winningTeams;
+    }
+
+    private void printEndScore(Team winner, int goalsTeam1, int goalsTeam2) {
+        System.out.print(winner.getTeamName() + " won the match: " + goalsTeam1 + "-" + goalsTeam2);
+        if (goalsTeam1 == goalsTeam2) {
+            System.out.println(" (won by penalties)");
+        }
+        else {
+            System.out.println("");
+        }
+    }
+
+    private Team pickRandomTeamFromList() {
+        Team team = teams.get((int)(Math.random() * teams.size()));
+        teams.remove(team);
+
+        return team;
     }
 
     private Team determineWinner(Team team1, int goalsTeam1, Team team2, int goalsTeam2) {
